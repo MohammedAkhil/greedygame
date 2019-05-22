@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { LineChart, Line, XAxis, YAxis } from "recharts";
 
 export default function LineGraph(props) {
