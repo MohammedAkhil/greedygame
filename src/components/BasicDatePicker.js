@@ -1,9 +1,31 @@
 import React, { useState } from "react";
 import { DateRange } from "react-date-range";
 import moment from "moment";
-import { Typography, Button } from "@material-ui/core";
+import { Typography, Button, Paper, Container } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  root: {
+    padding: 32
+  },
+  button: {
+    marginTop: 16,
+    marginLeft: 26
+  },
+  rangeContainer: {
+    display: "flex"
+  },
+  date: {
+    paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 8,
+    paddingRight: 8,
+    marginLeft: 16
+  }
+});
 
 function BasicDatePicker(props) {
+  const classes = useStyles();
   const { filterDate, onClickClear } = props;
   const [selectedRange, handleDateChange] = useState({});
 
@@ -31,17 +53,31 @@ function BasicDatePicker(props) {
         linkedCalendars={true}
       />
 
-      <Typography>{getFormattedDate(selectedRange.startDate)}</Typography>
-      <Typography>
-        {moment(selectedRange.endDate).format("YYYY-MM-DD")}
-      </Typography>
+      <div className={classes.rangeContainer}>
+        <Paper className={classes.date}>
+          {getFormattedDate(selectedRange.startDate)}
+        </Paper>
+        <Paper className={classes.date}>
+          {moment(selectedRange.endDate).format("YYYY-MM-DD")}
+        </Paper>
+      </div>
 
-      <Button variant="contained" onClick={onClickGo}>
-        Search
-      </Button>
-      <Button variant="contained" onClick={onClickClear}>
-        Clear
-      </Button>
+      <div>
+        <Button
+          className={classes.button}
+          variant="contained"
+          onClick={onClickGo}
+        >
+          Search
+        </Button>
+        <Button
+          className={classes.button}
+          variant="contained"
+          onClick={onClickClear}
+        >
+          Clear
+        </Button>
+      </div>
     </React.Fragment>
   );
 }
