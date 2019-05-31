@@ -74,7 +74,7 @@ class GamesTable extends React.Component {
 
   handleSelectAllClick = event => {
     if (event.target.checked) {
-      this.setState(state => ({ selected: state.data.map(n => n.id) }));
+      this.setState(state => ({ selected: this.props.games.map(n => n.id) }));
       return;
     }
     this.setState({ selected: [] });
@@ -112,10 +112,11 @@ class GamesTable extends React.Component {
   isSelected = id => this.state.selected.indexOf(id) !== -1;
 
   render() {
-    const { classes } = this.props;
+    const { classes, games } = this.props;
     const { data, order, orderBy, selected, rowsPerPage, page } = this.state;
+    console.log(data);
     const emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+      rowsPerPage - Math.min(rowsPerPage, games.length - page * rowsPerPage);
 
     return (
       <Paper className={classes.root}>
@@ -127,10 +128,10 @@ class GamesTable extends React.Component {
               orderBy={orderBy}
               onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
-              rowCount={data.length}
+              rowCount={games.length}
             />
             <TableBody>
-              {stableSort(data, getSorting(order, orderBy))
+              {stableSort(games, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(n => {
                   return (
@@ -161,7 +162,7 @@ class GamesTable extends React.Component {
         <TablePagination
           rowsPerPageOptions={[5, 10]}
           component="div"
-          count={data.length}
+          count={games.length}
           rowsPerPage={rowsPerPage}
           page={page}
           backIconButtonProps={{
